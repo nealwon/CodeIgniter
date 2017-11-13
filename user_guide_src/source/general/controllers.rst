@@ -18,7 +18,7 @@ Consider this URI::
 	example.com/index.php/blog/
 
 In the above example, CodeIgniter would attempt to find a controller
-named blog.php and load it.
+named Blog.php and load it.
 
 **When a controller's name matches the first segment of a URI, it will
 be loaded.**
@@ -27,7 +27,7 @@ Let's try it: Hello World!
 ==========================
 
 Let's create a simple controller so you can see it in action. Using your
-text editor, create a file called blog.php, and put the following code
+text editor, create a file called Blog.php, and put the following code
 in it::
 
 	<?php
@@ -40,6 +40,8 @@ in it::
 	}
 
 Then save the file to your *application/controllers/* directory.
+
+.. important:: The file must be called 'Blog.php', with a capital 'B'.
 
 Now visit the your site using a URL similar to this::
 
@@ -105,7 +107,7 @@ You should see your new message.
 Passing URI Segments to your methods
 ====================================
 
-If your URI contains more then two segments they will be passed to your
+If your URI contains more than two segments they will be passed to your
 method as parameters.
 
 For example, let's say you have a URI like this::
@@ -138,9 +140,12 @@ file and set this variable::
 
 	$route['default_controller'] = 'blog';
 
-Where Blog is the name of the controller class you want used. If you now
+Where 'blog' is the name of the controller class you want used. If you now
 load your main index.php file without specifying any URI segments you'll
-see your Hello World message by default.
+see your "Hello World" message by default.
+
+For more information, please refer to the "Reserved Routes" section of the
+:doc:`URI Routing <routing>` documentation.
 
 Remapping Method Calls
 ======================
@@ -261,26 +266,27 @@ Trying to access it via the URL, like this, will not work::
 Organizing Your Controllers into Sub-directories
 ================================================
 
-If you are building a large application you might find it convenient to
-organize your controllers into sub-directories. CodeIgniter permits you
-to do this.
+If you are building a large application you might want to hierarchically
+organize or structure your controllers into sub-directories. CodeIgniter
+permits you to do this.
 
-Simply create folders within your *application/controllers/* directory
-and place your controller classes within them.
+Simply create sub-directories under the main *application/controllers/*
+one and place your controller classes within them.
 
 .. note:: When using this feature the first segment of your URI must
 	specify the folder. For example, let's say you have a controller located
 	here::
 
-		application/controllers/products/shoes.php
+		application/controllers/products/Shoes.php
 
 	To call the above controller your URI will look something like this::
 
 		example.com/index.php/products/shoes/show/123
 
 Each of your sub-directories may contain a default controller which will be
-called if the URL contains only the sub-folder. Simply name your default
-controller as specified in your *application/config/routes.php* file.
+called if the URL contains *only* the sub-directory. Simply put a controller
+in there that matches the name of your 'default_controller' as specified in
+your *application/config/routes.php* file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI
 Routing <routing>` feature.

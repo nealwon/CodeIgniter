@@ -32,24 +32,6 @@ The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper
 with your URI data. In addition, your URLs can be remapped using the
 :doc:`URI Routing <routing>` feature for more flexibility.
 
-Friendly URLs
-=============
-
-As you might guess, since there's a straight relationship between
-URI segments and the controller/method pair that's being called,
-those two determining segments must represent a valid class and
-method name.
-You may however also use dashes in the class/method-representing
-segments, and they will automatically be translated to underscores
-in order to be valid routed segments.
-
-For example::
-
-	example.com/my-settings/change-password/
-
-The above example will route to the ``My_settings`` controller and
-its method ``change_password()``.
-
 Removing the index.php file
 ===========================
 
@@ -61,9 +43,9 @@ If your Apache server has *mod_rewrite* enabled, you can easily remove this
 file by using a .htaccess file with some simple rules. Here is an example
 of such a file, using the "negative" method in which everything is redirected
 except the specified items:
-
-::
 	
+.. code-block:: apache
+
 	RewriteEngine On
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d

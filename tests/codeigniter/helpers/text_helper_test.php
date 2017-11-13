@@ -2,21 +2,19 @@
 
 class Text_helper_test extends CI_TestCase {
 
-	private $_long_string;
-
 	public function set_up()
 	{
 		$this->helper('text');
-
-		$this->_long_string = 'Once upon a time, a framework had no tests.  It sad.  So some nice people began to write tests.  The more time that went on, the happier it became.  Everyone was happy.';
 	}
 
 	// ------------------------------------------------------------------------
 
 	public function test_word_limiter()
 	{
-		$this->assertEquals('Once upon a time,&#8230;', word_limiter($this->_long_string, 4));
-		$this->assertEquals('Once upon a time,&hellip;', word_limiter($this->_long_string, 4, '&hellip;'));
+		$long_string = 'Once upon a time, a framework had no tests.  It sad.  So some nice people began to write tests.  The more time that went on, the happier it became.  Everyone was happy.';
+
+		$this->assertEquals('Once upon a time,&#8230;', word_limiter($long_string, 4));
+		$this->assertEquals('Once upon a time,&hellip;', word_limiter($long_string, 4, '&hellip;'));
 		$this->assertEquals('', word_limiter('', 4));
 	}
 
@@ -24,8 +22,10 @@ class Text_helper_test extends CI_TestCase {
 
 	public function test_character_limiter()
 	{
-		$this->assertEquals('Once upon a time, a&#8230;', character_limiter($this->_long_string, 20));
-		$this->assertEquals('Once upon a time, a&hellip;', character_limiter($this->_long_string, 20, '&hellip;'));
+		$long_string = 'Once upon a time, a framework had no tests.  It sad.  So some nice people began to write tests.  The more time that went on, the happier it became.  Everyone was happy.';
+
+		$this->assertEquals('Once upon a time, a&#8230;', character_limiter($long_string, 20));
+		$this->assertEquals('Once upon a time, a&hellip;', character_limiter($long_string, 20, '&hellip;'));
 		$this->assertEquals('Short', character_limiter('Short', 20));
 		$this->assertEquals('Short', character_limiter('Short', 5));
 	}
@@ -103,20 +103,27 @@ class Text_helper_test extends CI_TestCase {
 
 	// ------------------------------------------------------------------------
 
+	/**
+	 * @runInSeparateProcess
+	 */
 	public function test_highlight_phrase()
 	{
+		define('UTF8_ENABLED', FALSE);
+
 		$strs = array(
-			'this is a phrase'			=> '<strong>this is</strong> a phrase',
-			'this is another'			=> '<strong>this is</strong> another',
-			'Gimme a test, Sally'		=> 'Gimme a test, Sally',
-			'Or tell me what this is'	=> 'Or tell me what <strong>this is</strong>',
-			''							=> ''
+			'this is a phrase'          => '<mark>this is</mark> a phrase',
+			'this is another'           => '<mark>this is</mark> another',
+			'Gimme a test, Sally'       => 'Gimme a test, Sally',
+			'Or tell me what this is'   => 'Or tell me what <mark>this is</mark>',
+			''                          => ''
 		);
 
 		foreach ($strs as $str => $expect)
 		{
 			$this->assertEquals($expect, highlight_phrase($str, 'this is'));
 		}
+
+		$this->assertEquals('<strong>this is</strong> a strong test', highlight_phrase('this is a strong test', 'this is', '<strong>', '</strong>'));
 	}
 
 	// ------------------------------------------------------------------------

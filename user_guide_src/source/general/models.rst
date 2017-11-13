@@ -22,12 +22,6 @@ model class might look like::
 		public $content;
 		public $date;
 
-		public function __construct()
-		{
-			// Call the CI_Model constructor
-			parent::__construct();
-		}
-
 		public function get_last_ten_entries()
 		{
 			$query = $this->db->get('entries', 10);
@@ -76,6 +70,7 @@ The basic prototype for a model class is this::
 		public function __construct()
 		{
 			parent::__construct();
+			// Your own constructor code
 		}
 
 	}
@@ -84,21 +79,21 @@ Where **Model_name** is the name of your class. Class names **must** have
 the first letter capitalized with the rest of the name lowercase. Make
 sure your class extends the base Model class.
 
-The file name will be a lower case version of your class name. For
-example, if your class is this::
+The file name must match the class name. For example, if this is your class::
 
 	class User_model extends CI_Model {
 
 		public function __construct()
 		{
 			parent::__construct();
+			// Your own constructor code
 		}
 
 	}
 
 Your file will be this::
 
-	application/models/user_model.php
+	application/models/User_model.php
 
 Loading a Model
 ===============
@@ -111,7 +106,7 @@ the following method::
 
 If your model is located in a sub-directory, include the relative path
 from your models directory. For example, if you have a model located at
-*application/models/blog/queries.php* you'll load it using::
+*application/models/blog/Queries.php* you'll load it using::
 
 	$this->load->model('blog/queries');
 
@@ -138,7 +133,7 @@ view::
 		{
 			$this->load->model('blog');
 
-			$data['query'] = $this->Blog->get_last_ten_entries();
+			$data['query'] = $this->blog->get_last_ten_entries();
 
 			$this->load->view('blog', $data);
 		}
@@ -181,4 +176,4 @@ database. The following options for connecting are available to you:
 	$config['pconnect'] = FALSE;
 	$config['db_debug'] = TRUE;
 
-	$this->load->model('Model_name', '', $config);
+	$this->load->model('model_name', '', $config);

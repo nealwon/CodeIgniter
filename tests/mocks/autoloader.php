@@ -1,6 +1,6 @@
 <?php
 
-// This autoloader provide convinient way to working with mock object
+// This autoloader provide convenient way to working with mock object
 // make the test looks natural. This autoloader support cascade file loading as well
 // within mocks directory.
 //
@@ -14,26 +14,48 @@ function autoload($class)
 	$dir = realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR;
 
 	$ci_core = array(
-		'Benchmark', 'Config', 'Controller',
-		'Exceptions', 'Hooks', 'Input',
-		'Lang', 'Loader', 'Log', 'Model',
-		'Output', 'Router', 'Security',
-		'URI', 'Utf8',
+		'Benchmark',
+		'Config',
+		'Controller',
+		'Exceptions',
+		'Hooks',
+		'Input',
+		'Lang',
+		'Loader',
+		'Log',
+		'Model',
+		'Output',
+		'Router',
+		'Security',
+		'URI',
+		'Utf8'
 	);
 
 	$ci_libraries = array(
-		'Calendar', 'Cart', 'Driver_Library',
-		'Email', 'Encrypt', 'Form_validation',
-		'Ftp', 'Image_lib', 'Javascript',
-		'Migration', 'Pagination', 'Parser',
-		'Profiler', 'Table', 'Trackback',
-	   	'Typography', 'Unit_test', 'Upload',
-	   	'User_agent', 'Xmlrpc', 'Zip'
+		'Calendar',
+		'Driver_Library',
+		'Email',
+		'Encrypt',
+		'Encryption',
+		'Form_validation',
+		'Ftp',
+		'Image_lib',
+		'Javascript',
+		'Migration',
+		'Pagination',
+		'Parser',
+		'Profiler',
+		'Table',
+		'Trackback',
+	   	'Typography',
+		'Unit_test',
+		'Upload',
+	   	'User_agent',
+		'Xmlrpc',
+		'Zip'
 	);
 
-	$ci_drivers = array(
-		'Session',
-	);
+	$ci_drivers = array('Session', 'Cache');
 
 	if (strpos($class, 'Mock_') === 0)
 	{
@@ -89,21 +111,7 @@ function autoload($class)
 
 	if ( ! file_exists($file))
 	{
-		$trace = debug_backtrace();
-
-		if ($trace[2]['function'] === 'class_exists' OR $trace[2]['function'] === 'file_exists')
-		{
-			// If the autoload call came from `class_exists` or `file_exists`,
-			// we skipped and return FALSE
-			return FALSE;
-		}
-		elseif (($autoloader = spl_autoload_functions()) && end($autoloader) !== __FUNCTION__)
-		{
-			// If there was other custom autoloader, passed away
-			return FALSE;
-		}
-
-		throw new InvalidArgumentException("Unable to load {$class}.");
+		return FALSE;
 	}
 
 	include_once($file);
